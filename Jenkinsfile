@@ -1,16 +1,30 @@
 pipeline {    
     agent any
     environment {
-        APPNAME = "votting-result"
-        IMAGE = "votting-result"
+        REGISTRY = "rolandop"
+        VOTING_NAME = "voting_result"
         DOCKER_HUB_LOGIN = credentials('dockerhub-rolandop')
     }
     stages {        
-        stage('Load Configuracion'){
+        stage('voting-result'){
             
-            steps {
-                sh "echo hola"
+            agent {
+                docker {
+                    image 'node:alpine'
+                    args '-u root:root'
+				    reuseNode true
+                }
             }
+
+            steps {
+                dir("result"){
+                    sh "pwd"
+				    sh 'docker build -t $REGISTRY/$VOTING_NAME:1.0 .'  
+                }
+                
+                          
+            }
+
         }
      }
  }
