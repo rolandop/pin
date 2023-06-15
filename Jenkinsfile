@@ -14,7 +14,10 @@ pipeline {
                     args '-u root:root'
 				    reuseNode true
                 }
-            }         
+            }  
+            steps{
+                sh "pwd"
+            }       
 
         }
         stage('voting-result-build'){
