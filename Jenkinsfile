@@ -6,7 +6,7 @@ pipeline {
         DOCKER_HUB_LOGIN = credentials('dockerhub-rolandop')
     }
     stages {        
-        stage('voting-result'){
+        stage('voting-result-run-build'){
             
             agent {
                 docker {
@@ -17,7 +17,7 @@ pipeline {
             }         
 
         }
-        stage('voting-result'){
+        stage('voting-result-build'){
             steps {
                 dir("result"){
                     sh "pwd"
