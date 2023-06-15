@@ -9,6 +9,7 @@ pipeline {
         stage('Load Configuracion'){
             
             steps {
+                sh "echo hola"
             }
         }
      }
