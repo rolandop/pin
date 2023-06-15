@@ -14,17 +14,18 @@ pipeline {
                     args '-u root:root'
 				    reuseNode true
                 }
-            }
+            }         
 
+        }
+        stage('voting-result'){
             steps {
                 dir("result"){
                     sh "pwd"
 				    sh 'docker build -t $REGISTRY/$VOTING_NAME:1.0 .'  
                 }
-                
+
                           
             }
-
         }
      }
  }
