@@ -6,25 +6,12 @@ pipeline {
         DOCKER_HUB_LOGIN = credentials('dockerhub-rolandop')
     }
     stages {        
-        stage('voting-result-run-build'){
-            
-            agent {
-                docker {
-                    image 'node:alpine'
-                    args '-u root:root'
-				    reuseNode true
-                }
-            }  
-            steps{
-                sh "pwd"
-            }       
-
-        }
+        
         stage('voting-result-build'){
             steps {
                 dir("result"){
                     sh "pwd"
-				    sh 'docker build -t $REGISTRY/$VOTING_NAME:1.0 .'  
+				    sh 'docker build -t $REGISTRY/$VOTING_NAME:1.1 .'  
                 }
 
                           
