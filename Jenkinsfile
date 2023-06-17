@@ -13,19 +13,24 @@ pipeline {
     stages {        
 
 
-        stage('Terraform') {
+        stage('IoC') {
             agent {
                 docker {
-                    image "ubuntu"
+                    image "ubuntu:22.04"
                     args '-u root:root'
                     reuseNode true
                 }
             }
              
             steps {
-                sh "echo intalling terraform"
-                sh '''
-                    apt update
+                sh "apt update"
+
+                sh "echo installing AWS CLI"
+                sh "apt install -y awscli"
+                sh "aws --version"
+                
+                sh "echo installing terraform"                 
+                sh '''                    
                     apt install -y wget
                     apt install -y unzip
                     wget https://releases.hashicorp.com/terraform/1.5.0/terraform_1.5.0_linux_386.zip
@@ -36,7 +41,7 @@ pipeline {
                 dir ("terraform"){
                     sh "echo terraform init"
                     sh "terraform init"
-                }     
+                }
             }
                    
         }
