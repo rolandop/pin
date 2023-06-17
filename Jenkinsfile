@@ -24,7 +24,7 @@ pipeline {
             }
             steps {
                
-                sh "terraform -help plan"
+                sh "echo hola"
             }
         }
 
