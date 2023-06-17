@@ -14,7 +14,25 @@ pipeline {
 
 
         stage('Terraform') {
+            agent {
+                docker {
+                    image "ubuntu"
+                    args '-u root:root'
+                    reuseNode true
+                }
+            }
+             
             steps {
+                sh "echo intalling terraform"
+                sh '''
+                    apt update
+                    apt install -y wget
+                    apt install -y unzip
+                    wget https://releases.hashicorp.com/terraform/1.5.0/terraform_1.5.0_linux_386.zip
+                    unzip terraform_1.5.0_linux_386.zip
+                    mv terraform /usr/bin/ 
+                '''
+                sh "terraform --version"
                 dir ("terraform"){
                     sh "echo terraform init"
                     sh "terraform init"
