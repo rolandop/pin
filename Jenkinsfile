@@ -29,7 +29,7 @@ pipeline {
                     apt install -y wget
                     apt install -y unzip
                     wget https://releases.hashicorp.com/terraform/1.5.0/terraform_1.5.0_linux_386.zip
-                    unzip terraform_1.5.0_linux_386.zip
+                    unzip -o terraform_1.5.0_linux_386.zip
                     mv -f terraform /usr/bin/ 
                 '''
                 sh "terraform --version"
