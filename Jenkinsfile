@@ -26,7 +26,11 @@ pipeline {
                 sh "apt update"
 
                 sh "echo installing AWS CLI"
-                sh "apt install -y awscli"
+                sh '''
+                    export TZ=US/Arizona
+                    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+                    apt install -y awscli
+                '''                
                 sh "aws --version"
                 
                 sh "echo installing terraform"                 
