@@ -15,19 +15,19 @@ pipeline {
         stage('build images'){
             steps {
 
-                sh "build result"
+                sh "echo build result"
                 dir("result"){
                     sh "pwd"
 				    sh 'docker build -t $REGISTRY/$RESULT_NAME:$RESULT_VERSION .'  
                 }
 
-                sh "build vote"
+                sh "echo build vote"
                 dir("vote"){
                     sh "pwd"
 				    sh 'docker build -t $REGISTRY/$VOTE_NAME:$VOTE_VERSION .'  
                 }
 
-                sh "build worker"
+                sh "echo build worker"
                 dir("worker"){
                     sh "pwd"
 				    sh 'docker build -t $REGISTRY/$WORKER_NAME:$WORKER_VERSION .'  
