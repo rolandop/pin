@@ -15,16 +15,11 @@ pipeline {
         
 
         stage('Terraform') {
-            agent {
-                docker {
-                    image 'hashicorp/terraform' 
-                    reuseNode true
-                }                
-            }
-            steps {
-               
-                sh "echo hola"
-            }
+            dir ("terraform"){
+
+                sh "echo terraform init"
+                sh "docker run -i -t hashicorp/terraform:latest init"
+            }            
         }
 
      }
