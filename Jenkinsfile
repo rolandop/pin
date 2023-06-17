@@ -12,21 +12,12 @@ pipeline {
     }
     stages {        
 
-        
-
-        stage('Terraform') {
-            agent {
-                docker {
-                    image 'hashicorp/terraform' 
-                    args '-u root:root'
-                    reuseNode true
-                }                
-            }
+        stage (“terraform init”) {
             steps {
-               
-                sh "echo hola"
+
+                sh ('terraform init')
+
             }
         }
-
      }
  }
