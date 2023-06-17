@@ -54,9 +54,11 @@ pipeline {
 
         stage('Terraform') {
             agent {
-                image 'ubuntu:'
-                args '-u root:root'
-                reuseNode true
+                docker {
+                    image 'ubuntu:'
+                    args '-u root:root'
+                    reuseNode true
+                }                
             }
             steps {
 
