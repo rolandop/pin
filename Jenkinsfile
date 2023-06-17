@@ -16,31 +16,15 @@ pipeline {
         stage('IoC') {
             agent {
                 docker {
-                    image "ubuntu:22.04"
+                    image "rolandop/ubuntu_ioc"
                     args '-u root:root'
                     reuseNode true
                 }
             }
              
             steps {
-                sh "apt update"
-
-                sh "echo installing AWS CLI"
-                sh '''
-                    export TZ=US/Arizona
-                    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-                    apt install -y awscli
-                '''                
-                sh "aws --version"
-                
-                sh "echo installing terraform"                 
-                sh '''                    
-                    apt install -y wget
-                    apt install -y unzip
-                    wget https://releases.hashicorp.com/terraform/1.5.0/terraform_1.5.0_linux_386.zip
-                    unzip -o terraform_1.5.0_linux_386.zip -d /usr/bin/
-                    rm terraform_1.5.0_linux_386.zip
-                '''
+                sh "apt update"            
+                sh "aws --version"               
                 sh "terraform --version"
                 dir ("terraform"){
                     sh "echo terraform init"
