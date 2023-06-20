@@ -9,11 +9,13 @@ pipeline {
         WORKER_NAME = "voting_worker"
         WORKER_VERSION = "1.1"
         DOCKER_HUB_LOGIN = credentials('dockerhub-rolandop')
+        AWS_ID = credentials("AWAWS-Auth-PINS_ID")
     }
     stages {        
 
 
         stage('IoC') {
+            
             agent {
                 docker {
                     image "rolandop/ubuntu_ioc"
@@ -21,19 +23,17 @@ pipeline {
                     reuseNode true
                 }
             }
+
+            environment {                
+                AWS_ACCESS_KEY_ID = "${env.AWS_ID_USR}"
+                AWS_SECRET_ACCESS_KEY = "${env.AWS_ID_PSW}"
+                AWS_REGION = "us-east-1"
+            }
              
             steps {
-                sh "apt update"
-                withCredentials([string(credentialsId: 'AWS-Auth-PIN', variable: 'secret')]) {
-                    script {
-                        def creds = readJSON text: secret
-                        env.AWS_ACCESS_KEY_ID = creds['accessKeyId']
-                        env.AWS_SECRET_ACCESS_KEY = creds['secretAccessKey']
-                        env.AWS_REGION = 'us-east-1' // or whatever
-                    }
-                    sh "aws --version"
-                    sh "aws sts get-caller-identity" // or whatever
-                }
+                sh "apt update"                
+                sh "aws --version"
+                sh "aws sts get-caller-identity" // or whatever
                 sh "terraform --version"
                 dir ("terraform"){
                     sh "echo terraform init"
