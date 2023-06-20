@@ -9,7 +9,7 @@ pipeline {
         WORKER_NAME = "voting_worker"
         WORKER_VERSION = "1.1"
         DOCKER_HUB_LOGIN = credentials('dockerhub-rolandop')
-        AWS_ID = credentials("AWAWS-Auth-PINS_ID")
+        AWS_ID = credentials("AWS-Auth-PIN")
     }
     stages {        
 
