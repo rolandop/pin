@@ -38,7 +38,10 @@ pipeline {
                 dir ("terraform"){
                     sh "echo terraform init"
                     sh "terraform init"
+                    sh "echo terraform plan"
                     sh "terraform plan"
+                    sh "echo terraform apply"
+                    sh "terraform apply"
                 }
             }
                    
