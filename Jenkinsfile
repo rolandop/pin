@@ -23,8 +23,11 @@ pipeline {
             }
              
             steps {
-                sh "apt update"            
-                sh "aws --version"               
+                sh "apt update"
+                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS-PIN'),
+                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']) {
+                    sh "aws --version"
+                }                       
                 sh "terraform --version"
                 dir ("terraform"){
                     sh "echo terraform init"
