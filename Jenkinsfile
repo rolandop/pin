@@ -24,10 +24,16 @@ pipeline {
              
             steps {
                 sh "apt update"
-                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS-PIN'),
-                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']) {
+                withCredentials([string(credentialsId: 'AWS-Auth-PIN', variable: 'secret')]) {
+                    script {
+                        def creds = readJSON text: secret
+                        env.AWS_ACCESS_KEY_ID = creds['accessKeyId']
+                        env.AWS_SECRET_ACCESS_KEY = creds['secretAccessKey']
+                        env.AWS_REGION = 'us-east-1' // or whatever
+                    }
                     sh "aws --version"
-                }                       
+                    sh "aws sts get-caller-identity" // or whatever
+                }
                 sh "terraform --version"
                 dir ("terraform"){
                     sh "echo terraform init"
