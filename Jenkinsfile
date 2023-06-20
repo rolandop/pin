@@ -41,7 +41,7 @@ pipeline {
                     sh "echo terraform plan"
                     sh "terraform plan"
                     sh "echo terraform apply"
-                    sh "terraform apply"
+                    sh "terraform apply -auto-approve" 
                 }
             }
                    
