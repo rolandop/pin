@@ -13,8 +13,48 @@ pipeline {
     }
     stages {        
 
+        stage('build images'){
+            steps {
 
-        stage('IoC') {
+                sh "echo build result"
+                dir("result"){
+                    sh "pwd"
+				    sh 'docker build -t $REGISTRY/$RESULT_NAME:$RESULT_VERSION .'  
+                }
+
+                sh "echo build vote"
+                dir("vote"){
+                    sh "pwd"
+				    sh 'docker build -t $REGISTRY/$VOTE_NAME:$VOTE_VERSION .'  
+                }
+
+                sh "echo build worker"
+                dir("worker"){
+                    sh "pwd"
+				    sh 'docker build -t $REGISTRY/$WORKER_NAME:$WORKER_VERSION .'  
+                }                    
+            }            
+        }
+        
+        stage('docker-push') {
+            steps {
+                sh "echo push result"
+                sh 'docker login --username=$DOCKER_HUB_LOGIN_USR --password=$DOCKER_HUB_LOGIN_PSW'
+                sh 'docker push $REGISTRY/$RESULT_NAME:$RESULT_VERSION' 
+
+                sh "echo push vote"
+                sh 'docker login --username=$DOCKER_HUB_LOGIN_USR --password=$DOCKER_HUB_LOGIN_PSW'
+                sh 'docker push $REGISTRY/$VOTE_NAME:$VOTE_VERSION' 
+
+                sh "echo push worker"
+                sh 'docker login --username=$DOCKER_HUB_LOGIN_USR --password=$DOCKER_HUB_LOGIN_PSW'
+                sh 'docker push $REGISTRY/$WORKER_NAME:$WORKER_VERSION' 
+            }
+           
+        }
+
+
+        stage('Infraestructura') {
             
             agent {
                 docker {
@@ -25,22 +65,27 @@ pipeline {
             }
 
             environment {                
-                AWS_ACCESS_KEY_ID = "${env.AWS_ID_USR}"
+                AWS_ACCESS_KEY_ID = "${env.r}"
                 AWS_SECRET_ACCESS_KEY = "${env.AWS_ID_PSW}"
                 AWS_REGION = "us-east-1"
             }
              
+             
             steps {
-                sh "apt update"                
+                sh "apt update && apt upgrade -y"                
                 sh "aws --version"
-                sh "aws sts get-caller-identity" // or whatever
-                sh "terraform --version"
-                dir ("terraform"){
+                sh "aws sts get-caller-identity"
+                
+                dir ("tf"){
+                    sh "terraform --version"
                     sh "echo terraform init"
+
                     sh "terraform init"
                     sh "echo terraform plan"
+
                     sh "terraform plan"
                     sh "echo terraform apply"
+                    
                     sh "terraform apply -auto-approve" 
                 }
             }
