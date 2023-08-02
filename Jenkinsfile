@@ -3,11 +3,11 @@ pipeline {
     environment {
         REGISTRY = "harbor.101si.ar/pin"
         RESULT_NAME = "voting_result"
-        RESULT_VERSION = "1.1"
+        RESULT_VERSION = "1.2"
         VOTE_NAME = "voting_vote"
-        VOTE_VERSION = "1.1"
+        VOTE_VERSION = "1.2"
         WORKER_NAME = "voting_worker"
-        WORKER_VERSION = "1.1"
+        WORKER_VERSION = "1.2"
         HARBOR_LOGIN = credentials('harbor-rolandop')
         AWS_ID = credentials("AWS-Auth-PIN")
     }
