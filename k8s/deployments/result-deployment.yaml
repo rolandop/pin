@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: result-deployment
+  labels:
+    app: result
+    tier: frontend
+    autor: rolando
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: result
+      tier: frontend
+      autor: rolando
+  template:
+    metadata:
+      labels:
+        app: result
+        tier: frontend
+        autor: rolando
+    spec:
+      containers:
+      - name: result
+        image: harbor.101si.ar/pin/voting_result:1.1
+        ports:
+        - containerPort: 80

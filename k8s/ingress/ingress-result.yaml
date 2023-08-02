@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: votting-ingress-result
+  labels:
+    app: vote
+    tier: frontend
+    autor: rolando
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/subnets: subnet-0482efa937619abd3, subnet-02c3c8dcf210ebf3e
+spec:
+  ingressClassName: alb  
+  rules:    
+    - http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: result-service
+              port:
+                number: 5001        
+    

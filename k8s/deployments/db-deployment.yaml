@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: db
+    tier: backend
+    autor: rolando
+  name: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+      tier: backend
+      autor: rolando
+  template:
+    metadata:
+      labels:
+        app: db
+        tier: backend
+        autor: rolando
+    spec:
+      containers:
+      - image: harbor.101si.ar/pin/postgres:15-alpine
+        name: postgres
+        env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: postgres
+        ports:
+        - containerPort: 5432
+          name: postgres
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: db-data
+      volumes:
+      - name: db-data
+        emptyDir: {} 
