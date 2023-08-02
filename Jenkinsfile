@@ -51,5 +51,31 @@ pipeline {
                 sh 'docker push $REGISTRY/$WORKER_NAME:$WORKER_VERSION' 
             }           
         }
+        stage('Deploy') {
+	    agent {
+                docker {
+                    image "ubuntu_ioc:2.0"
+                    args '-u root:root'
+                    reuseNode true
+                }
+            }
+	    environment {                
+                AWS_ACCESS_KEY_ID = "${env.AWS_ID_USR}"
+                AWS_SECRET_ACCESS_KEY = "${env.AWS_ID_PSW}"
+                AWS_REGION = "us-east-1"
+            }
+	    sh 'echo Deployment'
+	    dir("k8s"){
+                sh "pwd"
+		sh 'echo Deployment'
+		sh 'kubectl apply -f deployments/ -n pin-g1'
+
+		sh 'echo Servicios'
+		sh 'kubectl apply -f services/ -n pin-g1'
+
+		sh 'echo Ingress'
+		sh 'kubectl apply -f ingress/ -n pin-g1'
+            }
+        }
      }
  }
