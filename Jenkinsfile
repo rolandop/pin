@@ -39,7 +39,7 @@ pipeline {
         stage('docker-push') {
             steps {
 		sh 'echo login a harbor.101si.ar'
-		sh 'docker login harbor.101si.ar login --username=$HARBOR_LOGIN_USR --password=$HARBOR_LOGIN_PSW'
+		sh 'docker login harbor.101si.ar --username=$HARBOR_LOGIN_USR --password=$HARBOR_LOGIN_PSW'
                 
                 sh "echo push result"
                 sh 'docker push $REGISTRY/$RESULT_NAME:$RESULT_VERSION' 
