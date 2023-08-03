@@ -3,9 +3,9 @@ pipeline {
     environment {
         REGISTRY = "harbor.101si.ar/pin"
         RESULT_NAME = "voting_result"
-        RESULT_VERSION = "1.2"
+        RESULT_VERSION = "1.3"
         VOTE_NAME = "voting_vote"
-        VOTE_VERSION = "1.2"
+        VOTE_VERSION = "1.3"
         WORKER_NAME = "voting_worker"
         WORKER_VERSION = "1.2"
         HARBOR_LOGIN = credentials('harbor-rolandop')
