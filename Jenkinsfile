@@ -68,7 +68,7 @@ pipeline {
                 sh 'echo Deployment'
                 dir("k8s"){
                     sh "pwd"
-                    sh "Actualiza las versiones de las imàgenes"
+                    sh "echo Actualiza las versiones de las imàgenes"
 
                     sh ("sed -i -- 's/VAR_VOTE_VERSION/${VOTE_VERSION}/g' deployment/vote-deployment.yaml")
                     sh ("sed -i -- 's/VAR_RESULT_VERSION/${RESULT_VERSION}/g' deployment/result-deployment.yaml")
