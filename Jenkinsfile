@@ -68,6 +68,12 @@ pipeline {
                 sh 'echo Deployment'
                 dir("k8s"){
                     sh "pwd"
+                    sh "Actualiza las versiones de las imàgenes"
+
+                    sh ("sed -i -- 's/VAR_VOTE_VERSION/${VOTE_VERSION}/g' deployment/vote-deployment.yaml")
+                    sh ("sed -i -- 's/VAR_RESULT_VERSION/${RESULT_VERSION}/g' deployment/result-deployment.yaml")
+                    sh ("sed -i -- 's/VAR_WORKER_VERSION/${WORKER_VERSION}/g' deployment/worker-deployment.yaml")
+
                     sh 'echo Deployment'
                     sh 'kubectl apply -f deployments/ -n pin-g1'
 

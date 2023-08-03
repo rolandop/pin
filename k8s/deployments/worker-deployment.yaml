@@ -19,4 +19,4 @@ spec:
     spec:
       containers:
       - name: worker
-        image: harbor.101si.ar/pin/voting_worker:1.1
+        image: harbor.101si.ar/pin/voting_worker:VAR_WORKER_VERSION

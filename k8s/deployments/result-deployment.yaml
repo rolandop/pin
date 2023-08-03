@@ -22,6 +22,6 @@ spec:
     spec:
       containers:
       - name: result
-        image: harbor.101si.ar/pin/voting_result:1.1
+        image: harbor.101si.ar/pin/voting_result:VAR_RESULT_VERSION
         ports:
         - containerPort: 80
