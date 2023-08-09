@@ -1,5 +1,5 @@
 variable "app_name" {
-  default = "pin-devops-voting"
+  default = "pin-g1"
   type = string
 }
 
