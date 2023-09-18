@@ -21,7 +21,7 @@ spec:
         autor: rolando
     spec:
       containers:
-      - image: harbor.101si.ar/pin/redis:alpine
+      - image: redis:alpine
         name: redis
         ports:
         - containerPort: 6379

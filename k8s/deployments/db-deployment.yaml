@@ -21,7 +21,7 @@ spec:
         autor: rolando
     spec:
       containers:
-      - image: harbor.101si.ar/pin/postgres:15-alpine
+      - image: postgres:15-alpine
         name: postgres
         env:
         - name: POSTGRES_USER

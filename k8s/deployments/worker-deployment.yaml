@@ -19,4 +19,4 @@ spec:
     spec:
       containers:
       - name: worker
-        image: harbor.101si.ar/pin/voting_worker:VAR_WORKER_VERSION
+        image: rolandop/worker:v1
